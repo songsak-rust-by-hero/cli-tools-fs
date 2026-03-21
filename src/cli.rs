@@ -1,0 +1,23 @@
+use clap::{Parser, Subcommand};
+use std::path::PathBuf;
+
+#[derive(Parser)]
+pub struct Cil {
+    #[command(subcommand)]
+   pub command: Commands,
+}
+
+#[derive(Subcommand)]
+pub enum Commands {
+    #[command(name = "r")]
+    Read { path: PathBuf },
+    #[command(name = "w")]
+    Write { path: PathBuf, content: String },
+    #[command(name = "d")]
+    Delete { path: PathBuf },
+    #[command(name = "c")]
+    Create { path: PathBuf },
+    #[command(name = "e")]
+    Exists { path: PathBuf },
+}
+
