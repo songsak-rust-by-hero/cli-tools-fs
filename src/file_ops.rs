@@ -1,8 +1,9 @@
 use anyhow::{Context, Result};
 use std::fs;
 use std::fs::File;
-use std::path::{Path,PathBuf};
-
+use std::fs::OpenOptions;
+use std::io::Write;
+use std::path::{Path, PathBuf};
 
 pub fn read_file(path: &PathBuf) -> Result<String> {
     let content = fs::read_to_string(path).context("ไม่มีไฟล์ที่ต้องการ")?;
@@ -10,7 +11,7 @@ pub fn read_file(path: &PathBuf) -> Result<String> {
 }
 
 pub fn write_file(path: &PathBuf, content: &str) -> Result<()> {
-    fs::write(path, content).context("เขียนไฟล์ไม่ได้")?;
+    fs::write(path, format!("{content}\n")).context("เขียนไฟล์ไม่ได้")?;
     Ok(())
 }
 
@@ -32,3 +33,26 @@ pub fn file_exists(path: &PathBuf) {
     }
 }
 
+pub fn append_file(path: &PathBuf, content: &str) -> Result<()> {
+    let mut file = OpenOptions::new()
+        .append(true)
+        .open(path)
+        .context("เปิดไฟล์ไม่ได้")?;
+
+    writeln!(file, "{content}").context("เขียนไฟล์ไม่ได้")?;
+    Ok(())
+}
+
+pub fn file_size(path: &PathBuf) -> Result<()> {
+    let meta = fs::metadata(path).context("อ่านข้อมูลไม่ได้")?;
+    let size = meta.len() as f64;
+
+    if size < 1024.0 {
+        println!("ไฟล์นี้ขนาด {} bytes", size);
+    } else if size < 1024.0 * 1024.0 {
+        println!("ไฟล์นี้ขนาด {:.2} KB", size / 1024.0);
+    } else {
+        println!("ไฟล์นี้ขนาด {:.2} MB", size / (1024.0 * 1024.0));
+    }
+    Ok(())
+}

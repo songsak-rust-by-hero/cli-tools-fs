@@ -4,7 +4,7 @@ use std::path::PathBuf;
 #[derive(Parser)]
 pub struct Cil {
     #[command(subcommand)]
-   pub command: Commands,
+    pub command: Commands,
 }
 
 #[derive(Subcommand)]
@@ -19,5 +19,8 @@ pub enum Commands {
     Create { path: PathBuf },
     #[command(name = "e")]
     Exists { path: PathBuf },
+    #[command(name = "a")]
+    Append { path: PathBuf, content: String },
+    #[command(name = "info")]
+    Information { path: PathBuf },
 }
-

@@ -1,8 +1,8 @@
 mod cli;
 mod file_ops;
 
-use clap::Parser;
 use anyhow::Result;
+use clap::Parser;
 use cli::*;
 use file_ops::*;
 
@@ -16,6 +16,8 @@ fn main() -> Result<()> {
         Commands::Create { path } => create_file(&path)?,
         Commands::Write { path, content } => write_file(&path, &content)?,
         Commands::Exists { path } => file_exists(&path),
+        Commands::Append { path, content } => append_file(&path, &content)?,
+        Commands::Information { path } => file_size(&path)?,
     }
     Ok(())
 }
