@@ -23,4 +23,13 @@ pub enum Commands {
     Append { path: PathBuf, content: String },
     #[command(name = "info")]
     Information { path: PathBuf },
+    #[command(name = "cp")]
+    Copy { src: PathBuf, dst: PathBuf },
+    #[command(name = "m")]
+    Move { src: PathBuf, dst: PathBuf },
+    #[command(name = "ls")]
+    List {
+        #[arg(default_value = ".")]
+        path: PathBuf,
+    },
 }

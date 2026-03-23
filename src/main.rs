@@ -6,6 +6,8 @@ use clap::Parser;
 use cli::*;
 use file_ops::*;
 
+use crate::file_ops::list_dir;
+
 fn main() -> Result<()> {
     let arge = Cil::parse();
     match arge.command {
@@ -18,6 +20,9 @@ fn main() -> Result<()> {
         Commands::Exists { path } => file_exists(&path),
         Commands::Append { path, content } => append_file(&path, &content)?,
         Commands::Information { path } => file_size(&path)?,
+        Commands::Copy { src, dst } => copy_file(&src, &dst)?,
+        Commands::Move { src, dst } => move_file(&src, &dst)?,
+        Commands::List { path } => list_dir(&path)?,
     }
     Ok(())
 }

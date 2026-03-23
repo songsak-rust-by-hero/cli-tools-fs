@@ -56,3 +56,20 @@ pub fn file_size(path: &PathBuf) -> Result<()> {
     }
     Ok(())
 }
+
+pub fn copy_file(src: &PathBuf, dst: &PathBuf) -> Result<()> {
+    fs::copy(src, dst).context("ไฟล์ไม่มีอยู่จริง")?;
+    Ok(())
+}
+pub fn move_file(src: &PathBuf, dst: &PathBuf) -> Result<()> {
+    fs::rename(src, dst).context("ย้ายไฟล์ไม่ได้")?;
+    Ok(())
+}
+pub fn list_dir(path: &PathBuf) -> Result<()> {
+    let entries = fs::read_dir(path).context("เปิดโฟลเด้อไม่ได้")?;
+    for entry in entries {
+        let entry = entry.context("อ่านไฟล์ไม่ได้")?;
+        println!("{}", entry.file_name().to_string_lossy());
+    }
+    Ok(())
+}
