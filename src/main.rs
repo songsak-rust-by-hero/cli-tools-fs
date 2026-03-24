@@ -6,8 +6,6 @@ use clap::Parser;
 use cli::*;
 use file_ops::*;
 
-use crate::file_ops::list_dir;
-
 fn main() -> Result<()> {
     let arge = Cil::parse();
     match arge.command {
@@ -23,6 +21,9 @@ fn main() -> Result<()> {
         Commands::Copy { src, dst } => copy_file(&src, &dst)?,
         Commands::Move { src, dst } => move_file(&src, &dst)?,
         Commands::List { path } => list_dir(&path)?,
+        Commands::Mdir { path } => make_dir(&path)?,
+        Commands::Count { path } => count_lines(&path)?,
+        Commands::Search { path, keywold } => search_file(&path, &keywold)?,
     }
     Ok(())
 }

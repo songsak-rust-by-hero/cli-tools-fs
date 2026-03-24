@@ -32,4 +32,10 @@ pub enum Commands {
         #[arg(default_value = ".")]
         path: PathBuf,
     },
+    #[command(name = "mdir")]
+    Mdir { path: PathBuf },
+    #[command(name = "count")]
+    Count { path: PathBuf },
+    #[command(name = "s")]
+    Search { path: PathBuf, keywold: String },
 }

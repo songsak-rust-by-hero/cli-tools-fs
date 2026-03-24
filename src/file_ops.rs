@@ -73,3 +73,23 @@ pub fn list_dir(path: &PathBuf) -> Result<()> {
     }
     Ok(())
 }
+
+pub fn make_dir(path: &PathBuf) -> Result<()> {
+    fs::create_dir(path).context("สร้างไฟล์ไม่ได้")?;
+    Ok(())
+}
+
+pub fn count_lines(path: &PathBuf) -> Result<()> {
+    let content = read_file(path)?;
+    println!("{}", content.lines().count());
+    Ok(())
+}
+pub fn search_file(path: &PathBuf, keywold: &str) -> Result<()> {
+    let content = read_file(path)?;
+    for line in content.lines() {
+        if line.contains(keywold) {
+            println!("{line}");
+        }
+    }
+    Ok(())
+}
