@@ -38,4 +38,11 @@ pub enum Commands {
     Count { path: PathBuf },
     #[command(name = "s")]
     Search { path: PathBuf, keywold: String },
+    #[command(name = "tree")]
+    Tree {
+        #[arg(default_value = ".")]
+        path: PathBuf,
+        #[arg(short, long)]
+        all: bool,
+    },
 }

@@ -24,6 +24,10 @@ fn main() -> Result<()> {
         Commands::Mdir { path } => make_dir(&path)?,
         Commands::Count { path } => count_lines(&path)?,
         Commands::Search { path, keywold } => search_file(&path, &keywold)?,
+        Commands::Tree { path, all } => {
+            println!("{}", path.display());
+            run_tree(&path, "".to_string(), true, all)?;
+        }
     }
     Ok(())
 }
