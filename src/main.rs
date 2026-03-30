@@ -1,10 +1,9 @@
 mod cli;
 mod file_ops;
 
-use anyhow::Result;
+use crate::file_ops::my_prelude::*;
 use clap::Parser;
 use cli::*;
-use file_ops::*;
 
 fn main() -> Result<()> {
     let arge = Cil::parse();
