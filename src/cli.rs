@@ -13,8 +13,10 @@ pub enum Commands {
     Read { path: PathBuf },
     #[command(name = "w")]
     Write { path: PathBuf, content: String },
-    #[command(name = "d")]
+    #[command(name = "rm")]
     Delete { path: PathBuf },
+    #[command(name = "rd")]
+    DeleteDir { path: PathBuf },
     #[command(name = "c")]
     Create { path: PathBuf },
     #[command(name = "e")]

@@ -1,7 +1,7 @@
 use crate::file_ops::my_prelude::*;
 
-pub fn file_size(path: &PathBuf) -> Result<()> {
-    let meta = fs::metadata(path).context("อ่านข้อมูลไม่ได้")?;
+pub fn file_size(path: &Path) -> Result<()> {
+    let meta = fs::metadata(path).with_context(|| format!("ไม่สามารถอ่านข้อมูลได้: {:?}", path))?;
     let size = meta.len() as f64;
 
     if size < 1024.0 {
@@ -14,11 +14,12 @@ pub fn file_size(path: &PathBuf) -> Result<()> {
     Ok(())
 }
 
-pub fn copy_file(src: &PathBuf, dst: &PathBuf) -> Result<()> {
-    fs::copy(src, dst).context("ไฟล์ไม่มีอยู่จริง")?;
+pub fn copy_file(src: &Path, dst: &Path) -> Result<()> {
+    fs::copy(src, dst).with_context(|| format!("ไม่สามารถ copy ไฟล์จาก {:?} ไปยัง {:?}", src, dst))?;
     Ok(())
 }
-pub fn move_file(src: &PathBuf, dst: &PathBuf) -> Result<()> {
-    fs::rename(src, dst).context("ย้ายไฟล์ไม่ได้")?;
+pub fn move_file(src: &Path, dst: &Path) -> Result<()> {
+    fs::rename(src, dst)
+        .with_context(|| format!("ไม่สามารถ move ไฟล์จาก {:?} ไปยัง {:?}", src, dst))?;
     Ok(())
 }

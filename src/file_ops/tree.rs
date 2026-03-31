@@ -1,6 +1,6 @@
 use crate::file_ops::my_prelude::*;
 
-pub fn run_tree(path: &PathBuf, indent: String, is_last: bool, all: bool) -> Result<()> {
+pub fn run_tree(path: &Path, indent: String, is_last: bool, all: bool) -> Result<()> {
     let name = path
         .file_name()
         .map(|n| n.to_string_lossy())
