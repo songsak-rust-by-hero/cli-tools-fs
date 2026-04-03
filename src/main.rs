@@ -1,7 +1,7 @@
 mod cli;
 mod file_ops;
 
-use crate::file_ops::my_prelude::*;
+use crate::file_ops::{my_prelude::*, safe::safe_write};
 use clap::Parser;
 use cli::*;
 
@@ -14,7 +14,17 @@ fn main() -> Result<()> {
         Commands::Delete { path } => delete_file(&path)?,
         Commands::DeleteDir { path } => delete_dir(&path)?,
         Commands::Create { path } => create_file(&path)?,
-        Commands::Write { path, content } => write_file(&path, &content)?,
+        Commands::Write {
+            path,
+            content,
+            safe,
+        } => {
+            if safe {
+                safe_write(&path, &content)?;
+            } else {
+                write_file(&path, &content)?;
+            }
+        }
         Commands::Exists { path } => file_exists(&path),
         Commands::Append { path, content } => append_file(&path, &content)?,
         Commands::Information { path } => file_size(&path)?,
