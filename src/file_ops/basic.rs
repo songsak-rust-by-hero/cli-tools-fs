@@ -22,8 +22,15 @@ pub fn delete_dir(path: &Path) -> Result<()> {
     Ok(())
 }
 
-pub fn create_file(path: &Path) -> Result<()> {
-    File::create(path).with_context(|| format!("ไม่สามารถสร้างไฟล์ได้: {:?}", path))?;
+pub fn create_file<P: AsRef<Path>>(paths: &[P]) -> Result<()> {
+    for path in paths {
+        let path = path.as_ref();
+
+        if let Some(parent) = path.parent() {
+            fs::create_dir_all(parent).with_context(|| format!("สร้างโฟร์เด้อไม่ได้: {:?}", parent))?;
+        }
+        File::create(path).with_context(|| format!("สร้างไฟล์ไม่ได้: {:?}", path))?;
+    }
     Ok(())
 }
 

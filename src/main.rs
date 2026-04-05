@@ -13,7 +13,7 @@ fn main() -> Result<()> {
         }
         Commands::Delete { path } => delete_file(&path)?,
         Commands::DeleteDir { path } => delete_dir(&path)?,
-        Commands::Create { path } => create_file(&path)?,
+        Commands::Create { paths } => create_file(&paths)?,
         Commands::Write {
             path,
             content,

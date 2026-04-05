@@ -23,7 +23,10 @@ pub enum Commands {
     #[command(name = "rd")]
     DeleteDir { path: PathBuf },
     #[command(name = "c")]
-    Create { path: PathBuf },
+    Create {
+        #[arg(required = true)]
+        paths: Vec<PathBuf>,
+    },
     #[command(name = "e")]
     Exists { path: PathBuf },
     #[command(name = "a")]
