@@ -11,7 +11,7 @@ fn main() -> Result<()> {
         Commands::Read { path } => {
             println!("{}", read_file(&path)?);
         }
-        Commands::Delete { path } => delete_file(&path)?,
+        Commands::Delete { paths, force } => delete_file(&paths, force)?,
         Commands::DeleteDir { path } => delete_dir(&path)?,
         Commands::Create { paths } => create_file(&paths)?,
         Commands::Write {

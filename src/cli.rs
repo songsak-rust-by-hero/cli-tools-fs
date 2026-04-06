@@ -19,7 +19,11 @@ pub enum Commands {
         safe: bool,
     },
     #[command(name = "rm")]
-    Delete { path: PathBuf },
+    Delete {
+        paths: Vec<PathBuf>,
+        #[arg(short, long)]
+        force: bool,
+    },
     #[command(name = "rd")]
     DeleteDir { path: PathBuf },
     #[command(name = "c")]

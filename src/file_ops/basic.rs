@@ -12,8 +12,16 @@ pub fn write_file(path: &Path, content: &str) -> Result<()> {
     Ok(())
 }
 
-pub fn delete_file(path: &Path) -> Result<()> {
-    fs::remove_file(path).with_context(|| format!("ไม่สามารถลบไฟล์ได้: {:?}", path))?;
+pub fn delete_file<P: AsRef<Path>>(paths: &[P], force: bool) -> Result<()> {
+    for path in paths {
+        let path = path.as_ref();
+
+        if let Err(e) = fs::remove_file(path)
+            && !(force && e.kind() == std::io::ErrorKind::NotFound)
+        {
+            return Err(e).with_context(|| format!("ไม่สามารถลบไฟล์ได้: {:?}", path));
+        }
+    }
     Ok(())
 }
 
