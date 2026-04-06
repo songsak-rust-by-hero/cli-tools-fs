@@ -7,8 +7,7 @@ pub fn read_file(path: &Path) -> Result<String> {
 }
 
 pub fn write_file(path: &Path, content: &str) -> Result<()> {
-    fs::write(path, format!("{content}\n"))
-        .with_context(|| format!("ไม่สามาเขียนไฟล์ได้: {:?}", path))?;
+    fs::write(path, format!("{content}\n")).with_context(|| format!("เขียนไฟล์ไม่ได้: {:?}", path))?;
     Ok(())
 }
 
@@ -52,6 +51,7 @@ pub fn file_exists(path: &PathBuf) {
 
 pub fn append_file(path: &Path, content: &str) -> Result<()> {
     let mut file = OpenOptions::new()
+        .create(true)
         .append(true)
         .open(path)
         .with_context(|| format!("ไม่สามารถเปิดไฟล์ได้: {:?}", path))?;
